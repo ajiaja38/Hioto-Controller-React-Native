@@ -1,9 +1,10 @@
-import { View } from "react-native";
+import { View, Text } from "react-native";
 import React, { useState } from "react";
-import { Stack, useLocalSearchParams } from "expo-router";
+import { Router, Stack, useLocalSearchParams, useRouter } from "expo-router";
 import {
   IRegisterDeviceDto,
   IRegisterDevicePayload,
+  IResponseDevice,
 } from "@/types/interface/IDevice.interface";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button, HelperText, TextInput } from "react-native-paper";
@@ -13,10 +14,18 @@ import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Dropdown } from "react-native-paper-dropdown";
 import { EDevice } from "@/types/enum/EDevice.enum";
+import Toast from "react-native-toast-message";
+import { IResponseEntity } from "@/types/interface/IResponseWrapper.interface";
+import { DeviceService } from "@/service/device.service";
+import { ActivityIndicator, MD2Colors } from "react-native-paper";
 
 type RegisterDeviceSchema = z.infer<typeof registerDeviceSchema>;
 
 const RegisterDevice = () => {
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const router: Router = useRouter();
+
   const data = useLocalSearchParams();
   const payload: IRegisterDevicePayload =
     data as unknown as IRegisterDevicePayload;
@@ -29,18 +38,42 @@ const RegisterDevice = () => {
     resolver: zodResolver(registerDeviceSchema),
   });
 
-  const onSubmit = handleSubmit((data: RegisterDeviceSchema) => {
-    const payload: IRegisterDeviceDto = {
-      guid: data.guid,
-      mac: data.mac,
-      type: data.type,
-      quantity: parseInt(data.quantity),
-      name: data.name,
-      version: data.version,
-      minor: data.minor,
-    };
+  const onSubmit = handleSubmit(async (data: RegisterDeviceSchema) => {
+    setLoading(true);
 
-    console.log(payload);
+    setTimeout(async () => {
+      try {
+        const payload: IRegisterDeviceDto = {
+          guid: data.guid,
+          mac: data.mac,
+          type: data.type,
+          quantity: parseInt(data.quantity),
+          name: data.name,
+          version: data.version,
+          minor: data.minor,
+        };
+
+        const response: IResponseEntity<IResponseDevice> =
+          await DeviceService.registerDevice(payload);
+
+        Toast.show({
+          type: "success",
+          text1: "Success",
+          text2: response.message,
+          text2Style: { fontSize: 12, fontWeight: "bold" },
+        });
+
+        router.push("/devices");
+      } catch (error: any) {
+        Toast.show({
+          type: "error",
+          text1: "Error",
+          text2: error.message,
+          text2Style: { fontSize: 12, fontWeight: "bold" },
+        });
+      }
+      setLoading(false);
+    }, 2000);
   });
 
   return (
@@ -201,7 +234,7 @@ const RegisterDevice = () => {
 
         <Button
           mode="contained"
-          icon="arrow-right"
+          icon={loading ? "" : "arrow-right"}
           style={{
             borderRadius: 10,
             backgroundColor: "#7c3aed",
@@ -209,7 +242,11 @@ const RegisterDevice = () => {
           onPress={onSubmit}
           rippleColor="rgba(0, 0, 0, .32)"
         >
-          Register Device
+          {!loading ? (
+            <Text>Register Device</Text>
+          ) : (
+            <ActivityIndicator animating={true} color={MD2Colors.purple100} />
+          )}
         </Button>
       </View>
     </SafeAreaView>

@@ -19,3 +19,9 @@ export interface IRegisterDeviceDto {
   version: string;
   minor: string;
 }
+
+export interface IResponseDevice extends IRegisterDeviceDto {
+  id: number;
+  created_at: string;
+  updated_at: string;
+}

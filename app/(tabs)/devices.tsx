@@ -1,17 +1,10 @@
-import { View, Text, StyleSheet } from "react-native";
+import { Text } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Devices() {
   return (
-    <View style={styles.container}>
+    <SafeAreaView className="flex-1 bg-white p-4">
       <Text>Tab [Home|Devices]</Text>
-    </View>
+    </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-});
