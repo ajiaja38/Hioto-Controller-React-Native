@@ -1,15 +1,47 @@
-import { View, Text } from "react-native";
-import React from "react";
+import { View } from "react-native";
+import React, { useState } from "react";
 import { Stack, useLocalSearchParams } from "expo-router";
-import { IRegisterDevicePayload } from "@/types/interface/IDevice.interface";
+import {
+  IRegisterDeviceDto,
+  IRegisterDevicePayload,
+} from "@/types/interface/IDevice.interface";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { Button, HelperText, TextInput } from "react-native-paper";
+import { z } from "zod";
+import { registerDeviceSchema } from "@/schema/deviceSchema";
+import { Controller, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Dropdown } from "react-native-paper-dropdown";
+import { EDevice } from "@/types/enum/EDevice.enum";
+
+type RegisterDeviceSchema = z.infer<typeof registerDeviceSchema>;
 
 const RegisterDevice = () => {
   const data = useLocalSearchParams();
   const payload: IRegisterDevicePayload =
     data as unknown as IRegisterDevicePayload;
 
-  console.log(payload.guid);
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<RegisterDeviceSchema>({
+    resolver: zodResolver(registerDeviceSchema),
+  });
+
+  const onSubmit = handleSubmit((data: RegisterDeviceSchema) => {
+    const payload: IRegisterDeviceDto = {
+      guid: data.guid,
+      mac: data.mac,
+      type: data.type,
+      quantity: parseInt(data.quantity),
+      name: data.name,
+      version: data.version,
+      minor: data.minor,
+    };
+
+    console.log(payload);
+  });
 
   return (
     <SafeAreaView className="flex-1 bg-white px-4">
@@ -18,7 +50,168 @@ const RegisterDevice = () => {
           title: "Register Device",
         }}
       />
-      <Text>{payload.guid}</Text>
+      <View className="mt-4 flex flex-col gap-5 w-full">
+        <Controller
+          name="guid"
+          control={control}
+          defaultValue={payload.guid}
+          render={({ field }) => (
+            <View>
+              <TextInput
+                {...field}
+                mode="outlined"
+                label="Guid"
+                error={!!errors.guid}
+                disabled
+              />
+              {errors.guid && (
+                <HelperText type="error">{errors.guid?.message}</HelperText>
+              )}
+            </View>
+          )}
+        />
+
+        <Controller
+          name="mac"
+          control={control}
+          defaultValue={payload.mac}
+          render={({ field }) => (
+            <View>
+              <TextInput
+                {...field}
+                mode="outlined"
+                label="Mac Address"
+                error={!!errors.mac}
+                disabled
+              />
+              {errors.mac && (
+                <HelperText type="error">{errors.mac?.message}</HelperText>
+              )}
+            </View>
+          )}
+        />
+
+        <Controller
+          name="type"
+          control={control}
+          render={({ field: { onChange, value } }) => (
+            <View>
+              <Dropdown
+                placeholder="Select Type"
+                mode="outlined"
+                label="Type"
+                options={[
+                  { label: "Actuator", value: EDevice.AKTUATOR },
+                  { label: "Sensor", value: EDevice.SENSOR },
+                ]}
+                onSelect={(value) => {
+                  onChange(value);
+                }}
+                value={value}
+                error={!!errors.type}
+              />
+              {errors.type && (
+                <HelperText type="error">{errors.type?.message}</HelperText>
+              )}
+            </View>
+          )}
+        />
+
+        <Controller
+          name="quantity"
+          control={control}
+          defaultValue={payload.quantity}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <View>
+              <TextInput
+                mode="outlined"
+                label="Quantity"
+                value={value}
+                onBlur={onBlur}
+                onChangeText={onChange}
+                error={!!errors.quantity}
+              />
+              {errors.quantity && (
+                <HelperText type="error">{errors.quantity?.message}</HelperText>
+              )}
+            </View>
+          )}
+        />
+
+        <Controller
+          name="name"
+          control={control}
+          defaultValue={payload.name}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <View>
+              <TextInput
+                mode="outlined"
+                label="Device Name"
+                value={value}
+                onBlur={onBlur}
+                onChangeText={onChange}
+                error={!!errors.name}
+              />
+              {errors.name && (
+                <HelperText type="error">{errors.name?.message}</HelperText>
+              )}
+            </View>
+          )}
+        />
+
+        <Controller
+          name="version"
+          control={control}
+          defaultValue={payload.version}
+          render={({ field }) => (
+            <View>
+              <TextInput
+                {...field}
+                mode="outlined"
+                label="Mac Address"
+                error={!!errors.version}
+                disabled
+              />
+              {errors.version && (
+                <HelperText type="error">{errors.version?.message}</HelperText>
+              )}
+            </View>
+          )}
+        />
+
+        <Controller
+          name="minor"
+          control={control}
+          defaultValue={payload.minor}
+          render={({ field }) => (
+            <View>
+              <TextInput
+                {...field}
+                mode="outlined"
+                label="Minor"
+                error={!!errors.minor}
+                disabled
+              />
+              {errors.minor && (
+                <HelperText type="error">{errors.minor?.message}</HelperText>
+              )}
+            </View>
+          )}
+        />
+
+        <Button
+          mode="contained"
+          icon="arrow-right"
+          style={{
+            borderRadius: 10,
+            backgroundColor: "#7c3aed",
+          }}
+          onPress={onSubmit}
+          rippleColor="rgba(0, 0, 0, .32)"
+        >
+          Register Device
+        </Button>
+      </View>
     </SafeAreaView>
   );
 };
