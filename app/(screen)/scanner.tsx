@@ -1,13 +1,17 @@
+import { IRegisterDevicePayload } from "@/types/interface/IDevice.interface";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { useFocusEffect } from "@react-navigation/native";
 import { CameraView, CameraType, useCameraPermissions } from "expo-camera";
-import { Stack } from "expo-router";
+import { Router, Stack, useRouter } from "expo-router";
 import { useState } from "react";
-import { Alert, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 export default function Scanner(): JSX.Element {
   const [facing, setFacing] = useState<CameraType>("back");
   const [scanned, setScanned] = useState(false);
   const [permission, requestPermission] = useCameraPermissions();
+
+  const router: Router = useRouter();
 
   if (!permission) return <View />;
 
@@ -34,12 +38,21 @@ export default function Scanner(): JSX.Element {
   function handleBarcodeScanned({ data }: { data: string }): void {
     if (!scanned) {
       setScanned(true);
-      Alert.alert("QR Code Scanned", data, [
-        {
-          text: "OK",
-          onPress: () => setScanned(false),
+
+      const payload: IRegisterDevicePayload = JSON.parse(data);
+
+      router.push({
+        pathname: "/(screen)/register-device",
+        params: {
+          guid: payload.guid,
+          mac: payload.mac,
+          type: payload.type,
+          quantity: payload.quantity,
+          name: payload.name,
+          version: payload.version,
+          minor: payload.minor,
         },
-      ]);
+      });
     }
   }
 

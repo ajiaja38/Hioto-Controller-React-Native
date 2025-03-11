@@ -3,6 +3,7 @@ import { Stack } from "expo-router";
 import { useEffect } from "react";
 import { PaperProvider } from "react-native-paper";
 import * as SplashScreen from "expo-splash-screen";
+import Toast from "react-native-toast-message";
 import "./global.css";
 
 SplashScreen.preventAutoHideAsync();
@@ -32,6 +33,7 @@ export default function RootLayout() {
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
       </Stack>
+      <Toast topOffset={14} />
     </PaperProvider>
   );
 }
