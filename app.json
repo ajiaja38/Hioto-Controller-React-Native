@@ -15,7 +15,12 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "com.ajiperdana38.hiotocontroller"
     },
     "web": {
       "bundler": "metro",
@@ -27,7 +32,7 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/splash.png",
+          "image": "./assets/images/QR-Code.png",
           "resizeMode": "contain",
           "backgroundColor": "#ffffff",
           "enableFullScreenImage_legacy": true
@@ -57,6 +62,15 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "975a4c46-4f05-4745-9b34-4749d25dc71b"
+      }
+    },
+    "owner": "ajiperdana38"
   }
 }
