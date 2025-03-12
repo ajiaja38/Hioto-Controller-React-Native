@@ -14,28 +14,20 @@ import { Router, useRouter } from "expo-router";
 import { IResponseMessageEntity } from "@/types/interface/IResponseWrapper.interface";
 import { GlobalService } from "@/service/global.service";
 import { useEffect, useState } from "react";
-import Toast from "react-native-toast-message";
+import { useToast } from "@/hooks/useToas";
 
 export default function Index() {
-  const router: Router = useRouter();
   const [refreshing, setRefreshing] = useState(false);
+
+  const router: Router = useRouter();
+  const { toastSuccess, toasError } = useToast();
 
   const initApi = async () => {
     try {
       const response: IResponseMessageEntity = await GlobalService.initApi();
-      Toast.show({
-        type: "success",
-        text1: "Success Connect API",
-        text2: response.message,
-        text2Style: { fontSize: 12, fontWeight: "bold" },
-      });
+      toastSuccess(response.message);
     } catch (error: any) {
-      Toast.show({
-        type: "error",
-        text1: "Error Connect API",
-        text2: error.message,
-        text2Style: { fontSize: 12, fontWeight: "bold" },
-      });
+      toasError(error.response.data.message);
     }
   };
 

@@ -14,15 +14,16 @@ import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Dropdown } from "react-native-paper-dropdown";
 import { EDevice } from "@/types/enum/EDevice.enum";
-import Toast from "react-native-toast-message";
 import { IResponseEntity } from "@/types/interface/IResponseWrapper.interface";
 import { DeviceService } from "@/service/device.service";
 import { ActivityIndicator, MD2Colors } from "react-native-paper";
+import { useToast } from "@/hooks/useToas";
 
 type RegisterDeviceSchema = z.infer<typeof registerDeviceSchema>;
 
 const RegisterDevice = () => {
   const [loading, setLoading] = useState<boolean>(false);
+  const { toastSuccess, toasError } = useToast();
 
   const router: Router = useRouter();
 
@@ -56,21 +57,11 @@ const RegisterDevice = () => {
         const response: IResponseEntity<IResponseDevice> =
           await DeviceService.registerDevice(payload);
 
-        Toast.show({
-          type: "success",
-          text1: "Success",
-          text2: response.message,
-          text2Style: { fontSize: 12, fontWeight: "bold" },
-        });
+        toastSuccess(response.message);
 
         router.push("/devices");
       } catch (error: any) {
-        Toast.show({
-          type: "error",
-          text1: "Error",
-          text2: error.message,
-          text2Style: { fontSize: 12, fontWeight: "bold" },
-        });
+        toasError(error.response.data.message);
       }
       setLoading(false);
     }, 2000);
