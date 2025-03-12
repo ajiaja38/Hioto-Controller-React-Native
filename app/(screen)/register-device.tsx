@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import React, { useState } from "react";
 import { Router, Stack, useLocalSearchParams, useRouter } from "expo-router";
 import {
@@ -12,12 +12,12 @@ import { z } from "zod";
 import { registerDeviceSchema } from "@/schema/deviceSchema";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Dropdown } from "react-native-paper-dropdown";
 import { EDevice } from "@/types/enum/EDevice.enum";
 import { IResponseEntity } from "@/types/interface/IResponseWrapper.interface";
 import { DeviceService } from "@/service/device.service";
 import { ActivityIndicator, MD2Colors } from "react-native-paper";
 import { useToast } from "@/hooks/useToas";
+import { Dropdown } from "react-native-element-dropdown";
 
 type RegisterDeviceSchema = z.infer<typeof registerDeviceSchema>;
 
@@ -121,18 +121,21 @@ const RegisterDevice = () => {
           render={({ field: { onChange, value } }) => (
             <View>
               <Dropdown
+                style={[
+                  style.dropdown,
+                  { borderColor: errors.type ? "red" : "#7c3aed" },
+                ]}
                 placeholder="Select Type"
-                mode="outlined"
-                label="Type"
-                options={[
+                data={[
                   { label: "Actuator", value: EDevice.AKTUATOR },
                   { label: "Sensor", value: EDevice.SENSOR },
                 ]}
-                onSelect={(value) => {
-                  onChange(value);
+                onChange={(item) => {
+                  onChange(item.value);
                 }}
+                labelField="label"
+                valueField="value"
                 value={value}
-                error={!!errors.type}
               />
               {errors.type && (
                 <HelperText type="error">{errors.type?.message}</HelperText>
@@ -243,5 +246,15 @@ const RegisterDevice = () => {
     </SafeAreaView>
   );
 };
+
+const style = StyleSheet.create({
+  dropdown: {
+    height: 50,
+    borderColor: "gray",
+    borderWidth: 1,
+    borderRadius: 5,
+    paddingHorizontal: 8,
+  },
+});
 
 export default RegisterDevice;

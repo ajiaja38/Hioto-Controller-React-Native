@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "hioto-controller",
-    "slug": "hioto-controller",
+    "name": "Hioto",
+    "slug": "Hioto",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/icons/Cpu.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -14,7 +14,7 @@
     "android": {
       "usesCleartextTraffic": true,
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/icon.png",
+        "foregroundImage": "./assets/icons/Cpu.png",
         "backgroundColor": "#ffffff"
       },
       "permissions": [
@@ -34,7 +34,7 @@
         "expo-splash-screen",
         {
           "image": "./assets/images/QR-Code.png",
-          "resizeMode": "contain",
+          "resizeMode": "cover",
           "backgroundColor": "#ffffff",
           "enableFullScreenImage_legacy": true
         }
@@ -60,12 +60,14 @@
           "recordAudioAndroid": true
         }
       ],
-      "expo-build-properties",
-      {
-        "android": {
-          "usesCleartextTraffic": true
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "usesCleartextTraffic": true
+          }
         }
-      }
+      ]
     ],
     "experiments": {
       "typedRoutes": true

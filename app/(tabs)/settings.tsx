@@ -12,7 +12,7 @@ import {
 } from "@/types/interface/IRules.interface";
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import { zodResolver } from "@hookform/resolvers/zod";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import {
   Image,
@@ -23,9 +23,10 @@ import {
   View,
 } from "react-native";
 import { ActivityIndicator, MD2Colors } from "react-native-paper";
-import { Dropdown } from "react-native-paper-dropdown";
+import { Dropdown } from "react-native-element-dropdown";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { z } from "zod";
+import { StyleSheet } from "react-native";
 
 interface IDropdownFormat {
   label: string;
@@ -147,12 +148,16 @@ export default function Settings(): JSX.Element {
               name="inputDevice"
               render={({ field }) => (
                 <Dropdown
+                  style={[
+                    style.dropdown,
+                    { borderColor: errors.inputDevice ? "red" : "#7c3aed" },
+                  ]}
                   placeholder="Select Input Device"
-                  mode="outlined"
-                  label="Input Device"
-                  options={sensorDevice}
+                  labelField="label"
+                  valueField="value"
+                  data={sensorDevice}
                   value={field.value}
-                  onSelect={(value) => field.onChange(value)}
+                  onChange={(item) => field.onChange(item.value)}
                 />
               )}
             />
@@ -166,14 +171,17 @@ export default function Settings(): JSX.Element {
               name="outputDevices"
               render={({ field }) => (
                 <Dropdown
+                  style={[
+                    style.dropdown,
+                    { borderColor: errors.outputDevices ? "red" : "#7c3aed" },
+                  ]}
                   placeholder="Select Output Device"
-                  mode="outlined"
-                  label="Output Device"
-                  options={aktuatorDevice}
-                  onSelect={(value) => {
-                    if (!fields.find((item) => item.value === value)) {
-                      const stringify: string = value as string;
-                      append({ value: stringify });
+                  labelField="label"
+                  valueField="value"
+                  data={aktuatorDevice}
+                  onChange={(item) => {
+                    if (!fields.find((data) => data.value === item.value)) {
+                      append({ value: item.value });
                     }
                   }}
                 />
@@ -262,3 +270,13 @@ const CardOutputDevice: React.FC<ChildProps> = ({
     </View>
   );
 };
+
+const style = StyleSheet.create({
+  dropdown: {
+    height: 50,
+    borderColor: "gray",
+    borderWidth: 1,
+    borderRadius: 5,
+    paddingHorizontal: 8,
+  },
+});
