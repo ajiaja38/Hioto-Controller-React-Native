@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Hioto",
-    "slug": "Hioto",
+    "slug": "hioto-controller",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icons/Cpu.png",
