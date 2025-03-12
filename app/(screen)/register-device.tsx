@@ -59,7 +59,7 @@ const RegisterDevice = () => {
 
         toastSuccess(response.message);
 
-        router.push("/devices");
+        router.push("/");
       } catch (error: any) {
         toasError(error.response.data.message);
       }
