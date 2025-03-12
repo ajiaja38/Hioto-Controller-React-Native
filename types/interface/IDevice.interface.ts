@@ -1,4 +1,4 @@
-import { EDevice } from "../enum/EDevice.enum";
+import { EDevice, EDeviceStatus } from "../enum/EDevice.enum";
 
 export interface IRegisterDevicePayload {
   guid: string;
@@ -22,6 +22,8 @@ export interface IRegisterDeviceDto {
 
 export interface IResponseDevice extends IRegisterDeviceDto {
   id: number;
+  status: string;
+  status_device: EDeviceStatus;
   created_at: string;
   updated_at: string;
 }
