@@ -1,6 +1,5 @@
 import { IRegisterDevicePayload } from "@/types/interface/IDevice.interface";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { useFocusEffect } from "@react-navigation/native";
 import { CameraView, CameraType, useCameraPermissions } from "expo-camera";
 import { Router, Stack, useRouter } from "expo-router";
 import { useState } from "react";
