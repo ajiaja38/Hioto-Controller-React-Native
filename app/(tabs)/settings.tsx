@@ -90,29 +90,31 @@ export default function Settings(): JSX.Element {
     name: "outputDevices",
   });
 
-  const onSubmit = handleSubmit(async (data: CreateRuleSchema) => {
-    setLoading(true);
+  const onSubmit = handleSubmit(
+    async (data: CreateRuleSchema): Promise<void> => {
+      setLoading(true);
 
-    setTimeout(async () => {
-      try {
-        const payload: ICreateRulesDto = {
-          input_guid: data.inputDevice,
-          output_guid: data.outputDevices.map(
-            (data: { value: string }) => data.value
-          ),
-        };
+      setTimeout(async () => {
+        try {
+          const payload: ICreateRulesDto = {
+            input_guid: data.inputDevice,
+            output_guid: data.outputDevices.map(
+              (data: { value: string }) => data.value
+            ),
+          };
 
-        const response: IResponseEntity<IResponseRule> =
-          await RuleService.createRule(payload);
-        toastSuccess(response.message);
-        reset({ outputDevices: [] });
-      } catch (error: any) {
-        toasError(error.response.data.message);
-        reset({ outputDevices: [] });
-      }
-      setLoading(false);
-    }, 2000);
-  });
+          const response: IResponseEntity<IResponseRule> =
+            await RuleService.createRule(payload);
+          toastSuccess(response.message);
+          reset({ outputDevices: [] });
+        } catch (error: any) {
+          toasError(error.response.data.message);
+          reset({ outputDevices: [] });
+        }
+        setLoading(false);
+      }, 2000);
+    }
+  );
 
   const onRefresh = async (): Promise<void> => {
     setRefreshing(true);
