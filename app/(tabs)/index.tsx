@@ -16,13 +16,13 @@ import { GlobalService } from "@/service/global.service";
 import { useEffect, useState } from "react";
 import { useToast } from "@/hooks/useToas";
 
-export default function Index() {
+export default function Index(): JSX.Element {
   const [refreshing, setRefreshing] = useState(false);
 
   const router: Router = useRouter();
   const { toastSuccess, toasError } = useToast();
 
-  const initApi = async () => {
+  const initApi = async (): Promise<void> => {
     try {
       const response: IResponseMessageEntity = await GlobalService.initApi();
       toastSuccess(response.message);
@@ -31,11 +31,11 @@ export default function Index() {
     }
   };
 
-  useEffect(() => {
+  useEffect((): void => {
     initApi();
   }, []);
 
-  const onRefresh = async () => {
+  const onRefresh = async (): Promise<void> => {
     setRefreshing(true);
     await initApi();
     setRefreshing(false);

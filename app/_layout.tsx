@@ -8,7 +8,7 @@ import "./global.css";
 
 SplashScreen.preventAutoHideAsync();
 
-export default function RootLayout() {
+export default function RootLayout(): JSX.Element | null {
   const [fontsLoaded] = useFonts({
     "Rubik-Bold": require("../assets/fonts/Rubik-Bold.ttf"),
     "Rubik-ExtraBold": require("../assets/fonts/Rubik-ExtraBold.ttf"),

@@ -1,6 +1,12 @@
 import { View, Text, StyleSheet } from "react-native";
 import React, { useState } from "react";
-import { Router, Stack, useLocalSearchParams, useRouter } from "expo-router";
+import {
+  Router,
+  Stack,
+  UnknownOutputParams,
+  useLocalSearchParams,
+  useRouter,
+} from "expo-router";
 import {
   IRegisterDeviceDto,
   IRegisterDevicePayload,
@@ -21,13 +27,13 @@ import { Dropdown } from "react-native-element-dropdown";
 
 type RegisterDeviceSchema = z.infer<typeof registerDeviceSchema>;
 
-const RegisterDevice = () => {
+const RegisterDevice: React.FC = (): React.JSX.Element => {
   const [loading, setLoading] = useState<boolean>(false);
   const { toastSuccess, toasError } = useToast();
 
   const router: Router = useRouter();
 
-  const data = useLocalSearchParams();
+  const data: UnknownOutputParams = useLocalSearchParams();
   const payload: IRegisterDevicePayload =
     data as unknown as IRegisterDevicePayload;
 
@@ -39,33 +45,34 @@ const RegisterDevice = () => {
     resolver: zodResolver(registerDeviceSchema),
   });
 
-  const onSubmit = handleSubmit(async (data: RegisterDeviceSchema) => {
-    setLoading(true);
+  const onSubmit: (e?: React.BaseSyntheticEvent) => Promise<void> =
+    handleSubmit(async (data: RegisterDeviceSchema): Promise<void> => {
+      setLoading(true);
 
-    setTimeout(async () => {
-      try {
-        const payload: IRegisterDeviceDto = {
-          guid: data.guid,
-          mac: data.mac,
-          type: data.type,
-          quantity: parseInt(data.quantity),
-          name: data.name,
-          version: data.version,
-          minor: data.minor,
-        };
+      setTimeout(async (): Promise<void> => {
+        try {
+          const payload: IRegisterDeviceDto = {
+            guid: data.guid,
+            mac: data.mac,
+            type: data.type,
+            quantity: parseInt(data.quantity),
+            name: data.name,
+            version: data.version,
+            minor: data.minor,
+          };
 
-        const response: IResponseEntity<IResponseDevice> =
-          await DeviceService.registerDevice(payload);
+          const response: IResponseEntity<IResponseDevice> =
+            await DeviceService.registerDevice(payload);
 
-        toastSuccess(response.message);
+          toastSuccess(response.message);
 
-        router.push("/");
-      } catch (error: any) {
-        toasError(error.response.data.message);
-      }
-      setLoading(false);
-    }, 2000);
-  });
+          router.push("/");
+        } catch (error: any) {
+          toasError(error.response.data.message);
+        }
+        setLoading(false);
+      }, 2000);
+    });
 
   return (
     <SafeAreaView className="flex-1 bg-white px-4">
