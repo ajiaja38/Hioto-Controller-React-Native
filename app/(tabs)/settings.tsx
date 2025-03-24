@@ -1,19 +1,19 @@
-import images from "@/constant/images";
-import { useToast } from "@/hooks/useToas";
-import { createRuleSchema } from "@/schema/ruleSchema";
-import { DeviceService } from "@/service/device.service";
-import { RuleService } from "@/service/rule.service";
-import { EDevice } from "@/types/enum/EDevice.enum";
-import { IResponseDevice } from "@/types/interface/IDevice.interface";
-import { IResponseEntity } from "@/types/interface/IResponseWrapper.interface";
+import images from "@/constant/images"
+import { useToast } from "@/hooks/useToas"
+import { createRuleSchema } from "@/schema/ruleSchema"
+import { DeviceService } from "@/service/device.service"
+import { RuleService } from "@/service/rule.service"
+import { EDevice } from "@/types/enum/EDevice.enum"
+import { IResponseDevice } from "@/types/interface/IDevice.interface"
+import { IResponseEntity } from "@/types/interface/IResponseWrapper.interface"
 import {
   ICreateRulesDto,
   IResponseRule,
-} from "@/types/interface/IRules.interface";
-import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
-import { zodResolver } from "@hookform/resolvers/zod";
-import React, { useEffect, useState } from "react";
-import { Controller, useFieldArray, useForm } from "react-hook-form";
+} from "@/types/interface/IRules.interface"
+import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons"
+import { zodResolver } from "@hookform/resolvers/zod"
+import React, { useEffect, useState } from "react"
+import { Controller, useFieldArray, useForm } from "react-hook-form"
 import {
   Image,
   RefreshControl,
@@ -21,60 +21,60 @@ import {
   Text,
   TouchableOpacity,
   View,
-} from "react-native";
-import { ActivityIndicator, MD2Colors } from "react-native-paper";
-import { Dropdown } from "react-native-element-dropdown";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { z } from "zod";
-import { StyleSheet } from "react-native";
+} from "react-native"
+import { ActivityIndicator, MD2Colors } from "react-native-paper"
+import { Dropdown } from "react-native-element-dropdown"
+import { SafeAreaView } from "react-native-safe-area-context"
+import { z } from "zod"
+import { StyleSheet } from "react-native"
 
 interface IDropdownFormat {
-  label: string;
-  value: string;
+  label: string
+  value: string
 }
 
-type CreateRuleSchema = z.infer<typeof createRuleSchema>;
+type CreateRuleSchema = z.infer<typeof createRuleSchema>
 
 export default function Settings(): JSX.Element {
   const [refreshing, setRefreshing]: [boolean, (value: boolean) => void] =
-    useState<boolean>(false);
-  const [sensorDevice, setSensorDevice] = useState<IDropdownFormat[]>([]);
-  const [aktuatorDevice, setAktuatorDevice] = useState<IDropdownFormat[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
+    useState<boolean>(false)
+  const [sensorDevice, setSensorDevice] = useState<IDropdownFormat[]>([])
+  const [aktuatorDevice, setAktuatorDevice] = useState<IDropdownFormat[]>([])
+  const [loading, setLoading] = useState<boolean>(false)
 
-  const { toastSuccess, toasError } = useToast();
+  const { toastSuccess, toasError } = useToast()
 
   const getAllSensor = async (): Promise<void> => {
     try {
       const response: IResponseEntity<IResponseDevice[]> =
-        await DeviceService.getAllDevice(EDevice.SENSOR);
+        await DeviceService.getAllDevice(EDevice.SENSOR)
 
       setSensorDevice(
         response.data.map((data: IResponseDevice) => ({
           label: data.name,
           value: data.guid,
         }))
-      );
+      )
     } catch (error: any) {
-      toasError(error.response.data.message);
+      toasError(error.response.data.message)
     }
-  };
+  }
 
   const getAllAktuator = async (): Promise<void> => {
     try {
       const response: IResponseEntity<IResponseDevice[]> =
-        await DeviceService.getAllDevice(EDevice.AKTUATOR);
+        await DeviceService.getAllDevice(EDevice.AKTUATOR)
 
       setAktuatorDevice(
         response.data.map((data: IResponseDevice) => ({
           label: data.name,
           value: data.guid,
         }))
-      );
+      )
     } catch (error: any) {
-      toasError(error.response.data.message);
+      toasError(error.response.data.message)
     }
-  };
+  }
 
   const {
     control,
@@ -84,16 +84,16 @@ export default function Settings(): JSX.Element {
   } = useForm<CreateRuleSchema>({
     resolver: zodResolver(createRuleSchema),
     defaultValues: { inputDevice: "", outputDevices: [] },
-  });
+  })
 
   const { fields, append, remove } = useFieldArray({
     control,
     name: "outputDevices",
-  });
+  })
 
   const onSubmit = handleSubmit(
     async (data: CreateRuleSchema): Promise<void> => {
-      setLoading(true);
+      setLoading(true)
 
       setTimeout(async () => {
         try {
@@ -102,34 +102,34 @@ export default function Settings(): JSX.Element {
             output_guid: data.outputDevices.map(
               (data: { value: string }) => data.value
             ),
-          };
+          }
 
           const response: IResponseEntity<IResponseRule> =
-            await RuleService.createRule(payload);
-          toastSuccess(response.message);
-          reset({ outputDevices: [] });
+            await RuleService.createRule(payload)
+          toastSuccess(response.message)
+          reset({ outputDevices: [] })
         } catch (error: any) {
-          toasError(error.response.data.message);
-          reset({ outputDevices: [] });
+          toasError(error.response.data.message)
+          reset({ outputDevices: [] })
         }
-        setLoading(false);
-      }, 2000);
+        setLoading(false)
+      }, 2000)
     }
-  );
+  )
 
   const onRefresh = async (): Promise<void> => {
-    setRefreshing(true);
-    await getAllSensor();
-    await getAllAktuator();
-    reset({ outputDevices: [] });
+    setRefreshing(true)
+    await getAllSensor()
+    await getAllAktuator()
+    reset({ outputDevices: [] })
 
-    setRefreshing(false);
-  };
+    setRefreshing(false)
+  }
 
   useEffect(() => {
-    getAllSensor();
-    getAllAktuator();
-  }, []);
+    getAllSensor()
+    getAllAktuator()
+  }, [])
 
   return (
     <SafeAreaView className="flex-1 bg-white p-4">
@@ -140,7 +140,7 @@ export default function Settings(): JSX.Element {
       >
         <View className="p-5 bg-violet-500 rounded-md">
           <Text className="font-rubik-extrabold text-xl text-white text-center">
-            Create Rules For Devices
+            Create Rules For Device
           </Text>
         </View>
 
@@ -184,7 +184,7 @@ export default function Settings(): JSX.Element {
                   data={aktuatorDevice}
                   onChange={(item) => {
                     if (!fields.find((data) => data.value === item.value)) {
-                      append({ value: item.value });
+                      append({ value: item.value })
                     }
                   }}
                 />
@@ -247,13 +247,13 @@ export default function Settings(): JSX.Element {
         </View>
       </ScrollView>
     </SafeAreaView>
-  );
+  )
 }
 
 interface ChildProps {
-  guid: string;
-  index: number;
-  removeOutputDevice: (index?: number | number[]) => void;
+  guid: string
+  index: number
+  removeOutputDevice: (index?: number | number[]) => void
 }
 
 const CardOutputDevice: React.FC<ChildProps> = ({
@@ -271,8 +271,8 @@ const CardOutputDevice: React.FC<ChildProps> = ({
         <MaterialCommunityIcons name="close" size={24} color="white" />
       </TouchableOpacity>
     </View>
-  );
-};
+  )
+}
 
 const style = StyleSheet.create({
   dropdown: {
@@ -282,4 +282,4 @@ const style = StyleSheet.create({
     borderRadius: 5,
     paddingHorizontal: 8,
   },
-});
+})
