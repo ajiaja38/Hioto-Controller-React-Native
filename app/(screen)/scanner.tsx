@@ -1,18 +1,19 @@
-import { IRegisterDevicePayload } from "@/types/interface/IDevice.interface";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { CameraView, CameraType, useCameraPermissions } from "expo-camera";
-import { Router, Stack, useRouter } from "expo-router";
-import { useState } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { IRegisterDevicePayload } from "@/types/interface/IDevice.interface"
+import { MaterialCommunityIcons } from "@expo/vector-icons"
+import { CameraView, CameraType, useCameraPermissions } from "expo-camera"
+import { Router, Stack, useRouter } from "expo-router"
+import { useState } from "react"
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native"
 
 export default function Scanner(): JSX.Element {
-  const [facing, setFacing] = useState<CameraType>("back");
-  const [scanned, setScanned] = useState(false);
-  const [permission, requestPermission] = useCameraPermissions();
+  const [facing, setFacing] = useState<CameraType>("back")
+  const [scanned, setScanned]: [boolean, (value: boolean) => void] =
+    useState<boolean>(false)
+  const [permission, requestPermission] = useCameraPermissions()
 
-  const router: Router = useRouter();
+  const router: Router = useRouter()
 
-  if (!permission) return <View />;
+  if (!permission) return <View />
 
   if (!permission.granted) {
     return (
@@ -27,18 +28,18 @@ export default function Scanner(): JSX.Element {
           <Text style={styles.grantText}>Grant Permission</Text>
         </TouchableOpacity>
       </View>
-    );
+    )
   }
 
   function toggleCameraFacing(): void {
-    setFacing((current) => (current === "back" ? "front" : "back"));
+    setFacing((current) => (current === "back" ? "front" : "back"))
   }
 
   function handleBarcodeScanned({ data }: { data: string }): void {
     if (!scanned) {
-      setScanned(true);
+      setScanned(true)
 
-      const payload: IRegisterDevicePayload = JSON.parse(data);
+      const payload: IRegisterDevicePayload = JSON.parse(data)
 
       router.push({
         pathname: "/(screen)/register-device",
@@ -51,7 +52,7 @@ export default function Scanner(): JSX.Element {
           version: payload.version,
           minor: payload.minor,
         },
-      });
+      })
     }
   }
 
@@ -91,7 +92,7 @@ export default function Scanner(): JSX.Element {
         </View>
       </CameraView>
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -228,4 +229,4 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
   },
-});
+})
