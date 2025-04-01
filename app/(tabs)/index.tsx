@@ -1,6 +1,6 @@
-import icons from "@/constant/icons";
-import images from "@/constant/images";
-import { FontAwesome6 } from "@expo/vector-icons";
+import icons from "@/constant/icons"
+import images from "@/constant/images"
+import { FontAwesome6 } from "@expo/vector-icons"
 import {
   Image,
   ScrollView,
@@ -8,38 +8,38 @@ import {
   TouchableOpacity,
   View,
   RefreshControl,
-} from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { Router, useRouter } from "expo-router";
-import { IResponseMessageEntity } from "@/types/interface/IResponseWrapper.interface";
-import { GlobalService } from "@/service/global.service";
-import { useEffect, useState } from "react";
-import { useToast } from "@/hooks/useToas";
+} from "react-native"
+import { SafeAreaView } from "react-native-safe-area-context"
+import { Router, useRouter } from "expo-router"
+import { IResponseMessageEntity } from "@/types/interface/IResponseWrapper.interface"
+import { GlobalService } from "@/service/global.service"
+import { useEffect, useState } from "react"
+import { useToast } from "@/hooks/useToas"
 
 export default function Index(): JSX.Element {
-  const [refreshing, setRefreshing] = useState(false);
+  const [refreshing, setRefreshing] = useState<boolean>(false)
 
-  const router: Router = useRouter();
-  const { toastSuccess, toasError } = useToast();
+  const router: Router = useRouter()
+  const { toastSuccess, toasError } = useToast()
 
   const initApi = async (): Promise<void> => {
     try {
-      const response: IResponseMessageEntity = await GlobalService.initApi();
-      toastSuccess(response.message);
+      const response: IResponseMessageEntity = await GlobalService.initApi()
+      toastSuccess(response.message)
     } catch (error: any) {
-      toasError(error.response.data.message);
+      toasError(error.response.data.message)
     }
-  };
+  }
 
   useEffect((): void => {
-    initApi();
-  }, []);
+    initApi()
+  }, [])
 
   const onRefresh = async (): Promise<void> => {
-    setRefreshing(true);
-    await initApi();
-    setRefreshing(false);
-  };
+    setRefreshing(true)
+    await initApi()
+    setRefreshing(false)
+  }
 
   return (
     <SafeAreaView className="px-4 bg-white flex-1">
@@ -75,5 +75,5 @@ export default function Index(): JSX.Element {
         </View>
       </ScrollView>
     </SafeAreaView>
-  );
+  )
 }
