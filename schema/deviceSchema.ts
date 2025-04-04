@@ -9,7 +9,7 @@ export const registerDeviceSchema = z.object({
     .string({ required_error: "Mac Address is required" })
     .min(1, { message: "Mac Address is required" }),
   type: z.enum([EDevice.AKTUATOR, EDevice.SENSOR], {
-    message: "Deivce Type is required",
+    message: "Deivce is required",
   }),
   quantity: z.string().min(1, { message: "Quantity is required" }),
   name: z
