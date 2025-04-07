@@ -1,16 +1,16 @@
 import {
   IRegisterDeviceDto,
   IResponseDevice,
-} from "@/types/interface/IDevice.interface";
-import { IResponseEntity } from "@/types/interface/IResponseWrapper.interface";
-import { api } from ".";
-import { EDevice } from "@/types/enum/EDevice.enum";
+} from "@/types/interface/IDevice.interface"
+import { IResponseEntity } from "@/types/interface/IResponseWrapper.interface"
+import { api } from "."
+import { EDevice } from "@/types/enum/EDevice.enum"
 
 export class DeviceService {
   public static async registerDevice(
     registerDeviceDto: IRegisterDeviceDto
   ): Promise<IResponseEntity<IResponseDevice>> {
-    return await api.post("device", registerDeviceDto);
+    return await api.post("device", registerDeviceDto)
   }
 
   public static async getAllDevice(
@@ -20,12 +20,12 @@ export class DeviceService {
       params: {
         type,
       },
-    });
+    })
   }
 
   public static async getDeviceByGuid(
     guid: string
   ): Promise<IResponseEntity<IResponseDevice>> {
-    return await api.get(`device/${guid}`);
+    return await api.get(`device/${guid}`)
   }
 }

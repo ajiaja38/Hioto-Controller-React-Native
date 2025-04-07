@@ -1,44 +1,44 @@
-import { View, Text, StyleSheet } from "react-native";
-import React, { useState } from "react";
+import { View, Text, StyleSheet } from "react-native"
+import React, { useState } from "react"
 import {
   Router,
   Stack,
   UnknownOutputParams,
   useLocalSearchParams,
   useRouter,
-} from "expo-router";
+} from "expo-router"
 import {
   IRegisterDeviceDto,
   IRegisterDevicePayload,
   IResponseDevice,
-} from "@/types/interface/IDevice.interface";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { Button, HelperText, TextInput } from "react-native-paper";
-import { z } from "zod";
-import { registerDeviceSchema } from "@/schema/deviceSchema";
-import { Controller, useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { EDevice } from "@/types/enum/EDevice.enum";
-import { IResponseEntity } from "@/types/interface/IResponseWrapper.interface";
-import { DeviceService } from "@/service/device.service";
-import { ActivityIndicator, MD2Colors } from "react-native-paper";
-import { useToast } from "@/hooks/useToas";
-import { Dropdown } from "react-native-element-dropdown";
+} from "@/types/interface/IDevice.interface"
+import { SafeAreaView } from "react-native-safe-area-context"
+import { Button, HelperText, TextInput } from "react-native-paper"
+import { z } from "zod"
+import { registerDeviceSchema } from "@/schema/deviceSchema"
+import { Controller, useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { EDevice } from "@/types/enum/EDevice.enum"
+import { IResponseEntity } from "@/types/interface/IResponseWrapper.interface"
+import { DeviceService } from "@/service/device.service"
+import { ActivityIndicator, MD2Colors } from "react-native-paper"
+import { useToast } from "@/hooks/useToas"
+import { Dropdown } from "react-native-element-dropdown"
 
-type RegisterDeviceSchema = z.infer<typeof registerDeviceSchema>;
+type RegisterDeviceSchema = z.infer<typeof registerDeviceSchema>
 
 const RegisterDevice: React.FC = (): React.JSX.Element => {
   const [loading, setLoading]: [
     boolean,
     React.Dispatch<React.SetStateAction<boolean>>
-  ] = useState<boolean>(false);
-  const { toastSuccess, toasError } = useToast();
+  ] = useState<boolean>(false)
+  const { toastSuccess, toasError } = useToast()
 
-  const router: Router = useRouter();
+  const router: Router = useRouter()
 
-  const data: UnknownOutputParams = useLocalSearchParams();
+  const data: UnknownOutputParams = useLocalSearchParams()
   const payload: IRegisterDevicePayload =
-    data as unknown as IRegisterDevicePayload;
+    data as unknown as IRegisterDevicePayload
 
   const {
     control,
@@ -46,11 +46,11 @@ const RegisterDevice: React.FC = (): React.JSX.Element => {
     formState: { errors },
   } = useForm<RegisterDeviceSchema>({
     resolver: zodResolver(registerDeviceSchema),
-  });
+  })
 
   const onSubmit: (e?: React.BaseSyntheticEvent) => Promise<void> =
     handleSubmit(async (data: RegisterDeviceSchema): Promise<void> => {
-      setLoading(true);
+      setLoading(true)
 
       setTimeout(async (): Promise<void> => {
         try {
@@ -62,20 +62,20 @@ const RegisterDevice: React.FC = (): React.JSX.Element => {
             name: data.name,
             version: data.version,
             minor: data.minor,
-          };
+          }
 
           const response: IResponseEntity<IResponseDevice> =
-            await DeviceService.registerDevice(payload);
+            await DeviceService.registerDevice(payload)
 
-          toastSuccess(response.message);
+          toastSuccess(response.message)
 
-          router.push("/");
+          router.push("/")
         } catch (error: any) {
-          toasError(error.response.data.message);
+          toasError(error.response.data.message)
         }
-        setLoading(false);
-      }, 2000);
-    });
+        setLoading(false)
+      }, 2000)
+    })
 
   return (
     <SafeAreaView className="flex-1 bg-white px-4">
@@ -141,7 +141,7 @@ const RegisterDevice: React.FC = (): React.JSX.Element => {
                   { label: "Sensor", value: EDevice.SENSOR },
                 ]}
                 onChange={(item) => {
-                  onChange(item.value);
+                  onChange(item.value)
                 }}
                 labelField="label"
                 valueField="value"
@@ -254,8 +254,8 @@ const RegisterDevice: React.FC = (): React.JSX.Element => {
         </Button>
       </View>
     </SafeAreaView>
-  );
-};
+  )
+}
 
 const style = StyleSheet.create({
   dropdown: {
@@ -265,6 +265,6 @@ const style = StyleSheet.create({
     borderRadius: 5,
     paddingHorizontal: 8,
   },
-});
+})
 
-export default RegisterDevice;
+export default RegisterDevice

@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from "zod"
 
 export const createRuleSchema = z.object({
   inputDevice: z
@@ -7,4 +7,4 @@ export const createRuleSchema = z.object({
   outputDevices: z
     .array(z.object({ value: z.string() }))
     .min(1, "Choose at least one output device"),
-});
+})

@@ -1,4 +1,4 @@
-const tintColorLight = "#0a7ea4";
+const tintColorLight = "#0a7ea4"
 
 export const Colors = {
   light: {
@@ -9,4 +9,4 @@ export const Colors = {
     tabIconDefault: "#98DED9",
     tabIconSelected: "#7c3aed",
   },
-};
+}

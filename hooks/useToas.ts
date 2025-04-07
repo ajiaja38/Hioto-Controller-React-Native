@@ -1,9 +1,9 @@
-import Toast from "react-native-toast-message";
+import Toast from "react-native-toast-message"
 
 interface useToastType {
-  toastSuccess: (message: string) => void;
-  toasError: (message: string) => void;
-  toastInfo: (message: string) => void;
+  toastSuccess: (message: string) => void
+  toasError: (message: string) => void
+  toastInfo: (message: string) => void
 }
 
 export const useToast = (): useToastType => {
@@ -14,7 +14,7 @@ export const useToast = (): useToastType => {
         text1: "Success",
         text2: message,
         text2Style: { fontSize: 12, fontWeight: "bold" },
-      });
+      })
     },
     toasError(message) {
       Toast.show({
@@ -22,7 +22,7 @@ export const useToast = (): useToastType => {
         text1: "Error",
         text2: message,
         text2Style: { fontSize: 12, fontWeight: "bold" },
-      });
+      })
     },
     toastInfo(message) {
       Toast.show({
@@ -30,7 +30,7 @@ export const useToast = (): useToastType => {
         text1: "Info",
         text2: message,
         text2Style: { fontSize: 12, fontWeight: "bold" },
-      });
+      })
     },
-  };
-};
+  }
+}

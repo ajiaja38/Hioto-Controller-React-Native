@@ -1,6 +1,6 @@
-import { Colors } from "@/constant/color";
-import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { Tabs } from "expo-router";
+import { Colors } from "@/constant/color"
+import FontAwesome from "@expo/vector-icons/FontAwesome"
+import { Tabs } from "expo-router"
 
 export default function TabLayout() {
   return (
@@ -45,5 +45,5 @@ export default function TabLayout() {
         }}
       />
     </Tabs>
-  );
+  )
 }
