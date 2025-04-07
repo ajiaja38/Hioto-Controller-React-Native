@@ -140,7 +140,7 @@ export default function Settings(): JSX.Element {
       >
         <View className="p-5 bg-violet-500 rounded-md">
           <Text className="font-rubik-extrabold text-xl text-white text-center">
-            Create Rules For Device
+            Create Rules For your Device
           </Text>
         </View>
 
