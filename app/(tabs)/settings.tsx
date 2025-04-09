@@ -40,7 +40,8 @@ export default function Settings(): JSX.Element {
     useState<boolean>(false)
   const [sensorDevice, setSensorDevice] = useState<IDropdownFormat[]>([])
   const [aktuatorDevice, setAktuatorDevice] = useState<IDropdownFormat[]>([])
-  const [loading, setLoading] = useState<boolean>(false)
+  const [loading, setLoading]: [boolean, (value: boolean) => void] =
+    useState<boolean>(false)
 
   const { toastSuccess, toasError } = useToast()
 
