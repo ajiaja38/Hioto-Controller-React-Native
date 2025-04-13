@@ -36,7 +36,7 @@ interface IDropdownFormat {
 type CreateRuleSchema = z.infer<typeof createRuleSchema>
 
 export default function Settings(): JSX.Element {
-  const [refreshing, setRefreshing]: [boolean, (value: boolean) => void] =
+  const [refreshing, setRefreshing] =
     useState<boolean>(false)
   const [sensorDevice, setSensorDevice] = useState<IDropdownFormat[]>([])
   const [aktuatorDevice, setAktuatorDevice] = useState<IDropdownFormat[]>([])
