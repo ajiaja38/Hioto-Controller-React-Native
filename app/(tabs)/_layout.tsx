@@ -2,7 +2,7 @@ import { Colors } from "@/constant/color"
 import FontAwesome from "@expo/vector-icons/FontAwesome"
 import { Tabs } from "expo-router"
 
-export default function TabLayout() {
+export default function TabLayout(): React.JSX.Element {
   return (
     <Tabs
       screenOptions={{
