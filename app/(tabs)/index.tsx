@@ -17,7 +17,8 @@ import { useEffect, useState } from "react"
 import { useToast } from "@/hooks/useToas"
 
 export default function Index(): JSX.Element {
-  const [refreshing, setRefreshing] = useState<boolean>(false)
+  const [refreshing, setRefreshing]: [boolean, (value: boolean) => void] =
+    useState<boolean>(false)
 
   const router: Router = useRouter()
   const { toastSuccess, toasError } = useToast()
