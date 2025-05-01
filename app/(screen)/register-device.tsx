@@ -33,7 +33,7 @@ const RegisterDevice: React.FC = (): React.JSX.Element => {
 
   const router: Router = useRouter()
 
-  const data = useLocalSearchParams()
+  const data: UnknownOutputParams = useLocalSearchParams()
   const payload: IRegisterDevicePayload =
     data as unknown as IRegisterDevicePayload
 
