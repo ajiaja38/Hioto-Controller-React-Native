@@ -81,6 +81,7 @@ const RegisterDevice: React.FC = (): React.JSX.Element => {
           title: "Register Device",
         }}
       />
+      
       <View className="mt-4 flex flex-col gap-5 w-full">
         <Controller
           name="guid"
