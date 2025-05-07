@@ -28,7 +28,7 @@ import { Dropdown } from "react-native-element-dropdown"
 type RegisterDeviceSchema = z.infer<typeof registerDeviceSchema>
 
 const RegisterDevice: React.FC = (): React.JSX.Element => {
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState<boolean>(false)
   const { toastSuccess, toasError } = useToast()
 
   const router: Router = useRouter()
