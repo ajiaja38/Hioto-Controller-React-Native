@@ -240,7 +240,7 @@ export const Settings = (): JSX.Element => {
                 Oops!
               </Text>
               <Text className="font-rubik-medium text-black-200 text-xl text-center">
-                No output device is selected yet
+                No output device is selected
               </Text>
             </View>
           )}
