@@ -54,7 +54,7 @@ export default function Index(): JSX.Element {
               Hioto
             </Text>
             <Text className="text-violet-200 text-base font-rubik-light">
-              Hello, Welcome to Hioto
+              Hello, Welcome to Hioto Gokils
             </Text>
           </View>
           <Image source={icons.home} className="w-16 h-16" />
