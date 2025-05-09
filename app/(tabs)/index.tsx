@@ -70,7 +70,7 @@ export default function Index(): JSX.Element {
             className="flex flex-row justify-center items-center gap-3 bg-violet-500 shadow-lg border border-zinc-200 rounded-full p-4 px-7"
           >
             <FontAwesome6 name="qrcode" size={24} color="white" />
-            <Text className="font-bold text-lg text-white">Add New Device</Text>
+            <Text className="font-bold text-lg text-white">Add Device</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
