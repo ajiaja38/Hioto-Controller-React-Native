@@ -5,6 +5,6 @@ export const createRuleSchema = z.object({
     .string({ required_error: "Input Device is required" })
     .min(1, "Input Device is required"),
   outputDevices: z
-    .array(z.object({ value: z.string() }))
+    .array(z.object({ value: z.string(), label: z.string() }))
     .min(1, "Choose at least one output device"),
 })

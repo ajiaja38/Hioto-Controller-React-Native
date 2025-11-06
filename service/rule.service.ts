@@ -1,14 +1,14 @@
-import { IResponseEntity } from "@/types/interface/IResponseWrapper.interface";
+import { IResponseEntity } from "@/types/interface/IResponseWrapper.interface"
 import {
   ICreateRulesDto,
   IResponseRule,
-} from "@/types/interface/IRules.interface";
-import { api } from ".";
+} from "@/types/interface/IRules.interface"
+import { api } from "."
 
 export class RuleService {
   public static async createRule(
     createRuleDto: ICreateRulesDto
   ): Promise<IResponseEntity<IResponseRule>> {
-    return await api.post("rule", createRuleDto);
+    return await api.post("rule", createRuleDto)
   }
 }

@@ -35,7 +35,7 @@ interface IDropdownFormat {
 
 type CreateRuleSchema = z.infer<typeof createRuleSchema>
 
-export const Settings = (): JSX.Element => {
+const Settings = (): JSX.Element => {
   const [refreshing, setRefreshing] = useState<boolean>(false)
   const [sensorDevice, setSensorDevice] = useState<IDropdownFormat[]>([])
   const [aktuatorDevice, setAktuatorDevice] = useState<IDropdownFormat[]>([])
@@ -132,82 +132,83 @@ export const Settings = (): JSX.Element => {
   }, [])
 
   return (
-    <SafeAreaView className="flex-1 bg-white p-4">
+    <SafeAreaView className='flex-1 bg-white p-4'>
       <ScrollView
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       >
-        <View className="p-5 bg-violet-500 rounded-md">
-          <Text className="font-rubik-extrabold text-xl text-white text-center">
+        <View className='p-5 bg-violet-500 rounded-md'>
+          <Text className='font-rubik-extrabold text-xl text-white text-center'>
             Create Rule Devices
           </Text>
         </View>
 
-        <View className="mt-4 flex flex-col gap-y-4">
+        <View className='mt-4 flex flex-col gap-y-4'>
           <View>
             <Controller
               control={control}
-              name="inputDevice"
+              name='inputDevice'
               render={({ field }) => (
                 <Dropdown
                   style={[
                     style.dropdown,
                     { borderColor: errors.inputDevice ? "red" : "#7c3aed" },
                   ]}
-                  placeholder="Select Input Device"
-                  labelField="label"
-                  valueField="value"
+                  placeholder='Select Input Device'
+                  labelField='label'
+                  valueField='value'
                   data={sensorDevice}
                   value={field.value}
-                  onChange={(item) => field.onChange(item.value)}
+                  onChange={(item: IDropdownFormat) =>
+                    field.onChange(item.value)
+                  }
                 />
               )}
             />
             {errors.inputDevice && (
-              <Text className="text-red-500">{errors.inputDevice.message}</Text>
+              <Text className='text-red-500'>{errors.inputDevice.message}</Text>
             )}
           </View>
           <View>
             <Controller
               control={control}
-              name="outputDevices"
+              name='outputDevices'
               render={({ field }) => (
                 <Dropdown
                   style={[
                     style.dropdown,
                     { borderColor: errors.outputDevices ? "red" : "#7c3aed" },
                   ]}
-                  placeholder="Select Output Device"
-                  labelField="label"
-                  valueField="value"
+                  placeholder='Select Output Device'
+                  labelField='label'
+                  valueField='value'
                   data={aktuatorDevice}
-                  onChange={(item) => {
-                    if (!fields.find((data) => data.value === item.value)) {
-                      append({ value: item.value })
-                    }
+                  onChange={(item: IDropdownFormat) => {
+                    if (!fields.find((data) => data.value === item.value))
+                      append({ value: item.value, label: item.label })
                   }}
                 />
               )}
             />
             {errors.outputDevices && (
-              <Text className="text-red-500">
+              <Text className='text-red-500'>
                 {errors.outputDevices.message}
               </Text>
             )}
           </View>
         </View>
-        <View className="mt-4">
+        <View className='mt-4'>
           {fields.length ? (
-            <View className="flex flex-col gap-3">
-              <View className="flex flex-col w-full gap-2 border border-zinc-500 rounded-md p-2">
-                <Text className="font-rubik-semibold text-violet-500 text-lg">
-                  Input Guid
+            <View className='flex flex-col gap-3'>
+              <View className='flex flex-col w-full gap-2 border border-zinc-500 rounded-md p-2'>
+                <Text className='font-rubik-semibold text-violet-500 text-lg'>
+                  Aktuator Label
                 </Text>
                 {fields.map((field, index) => (
                   <CardOutputDevice
                     key={index}
-                    guid={field.value}
+                    label={field.label}
                     index={index}
                     removeOutputDevice={remove}
                   />
@@ -216,12 +217,12 @@ export const Settings = (): JSX.Element => {
               <TouchableOpacity
                 onPress={onSubmit}
                 disabled={loading}
-                className="bg-violet-600 p-3 rounded-md"
+                className='bg-violet-600 p-3 rounded-md'
               >
                 {!loading ? (
-                  <View className="flex flex-row gap-2 justify-center items-end">
-                    <MaterialIcons name="rule" size={24} color="white" />
-                    <Text className="font-rubik-bold text-xl text-white">
+                  <View className='flex flex-row gap-2 justify-center items-end'>
+                    <MaterialIcons name='rule' size={24} color='white' />
+                    <Text className='font-rubik-bold text-xl text-white'>
                       Submit
                     </Text>
                   </View>
@@ -234,12 +235,12 @@ export const Settings = (): JSX.Element => {
               </TouchableOpacity>
             </View>
           ) : (
-            <View className="flex flex-col w-full items-center">
-              <Image source={images.notfound} className="size-96" />
-              <Text className="font-rubik-extrabold text-red-500 text-5xl">
+            <View className='flex flex-col w-full items-center'>
+              <Image source={images.notfound} className='size-96' />
+              <Text className='font-rubik-extrabold text-red-500 text-5xl'>
                 Oops!
               </Text>
-              <Text className="font-rubik-medium text-black-200 text-xl text-center">
+              <Text className='font-rubik-medium text-black-200 text-xl text-center'>
                 No output device is selected
               </Text>
             </View>
@@ -251,24 +252,26 @@ export const Settings = (): JSX.Element => {
 }
 
 interface ChildProps {
-  guid: string
+  label: string
   index: number
   removeOutputDevice: (index?: number | number[]) => void
 }
 
 const CardOutputDevice: React.FC<ChildProps> = ({
-  guid,
+  label,
   index,
   removeOutputDevice,
 }) => {
   return (
-    <View className="p-3 rounded bg-slate-200 flex flex-row justify-between items-center">
-      <Text className="font-rubik-semibold text-black-300">{guid}</Text>
+    <View className='p-3 rounded bg-slate-200 flex flex-row justify-between items-center'>
+      <Text className='font-rubik-semibold text-xs text-black-300'>
+        {label}
+      </Text>
       <TouchableOpacity
-        className="bg-red-500 rounded"
+        className='bg-red-500 rounded'
         onPress={() => removeOutputDevice(index)}
       >
-        <MaterialCommunityIcons name="close" size={24} color="white" />
+        <MaterialCommunityIcons name='close' size={24} color='white' />
       </TouchableOpacity>
     </View>
   )
@@ -283,3 +286,5 @@ const style = StyleSheet.create({
     paddingHorizontal: 8,
   },
 })
+
+export default Settings

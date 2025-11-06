@@ -8,7 +8,7 @@ import "./global.css"
 
 SplashScreen.preventAutoHideAsync()
 
-export const RootLayout = (): JSX.Element | null => {
+const RootLayout = (): JSX.Element | null => {
   const [fontsLoaded]: [boolean, Error | null] = useFonts({
     "Rubik-Bold": require("../assets/fonts/Rubik-Bold.ttf"),
     "Rubik-ExtraBold": require("../assets/fonts/Rubik-ExtraBold.ttf"),
@@ -31,9 +31,11 @@ export const RootLayout = (): JSX.Element | null => {
   return (
     <PaperProvider>
       <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name='(tabs)' options={{ headerShown: false }} />
       </Stack>
       <Toast topOffset={14} />
     </PaperProvider>
   )
 }
+
+export default RootLayout

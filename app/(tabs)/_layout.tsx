@@ -23,23 +23,23 @@ export default function TabLayout(): React.JSX.Element {
       }}
     >
       <Tabs.Screen
-        name="index"
+        name='index'
         options={{
           headerShown: false,
           title: "Home",
           tabBarIcon: ({ color }) => (
-            <FontAwesome size={28} name="home" color={color} />
+            <FontAwesome size={28} name='home' color={color} />
           ),
           animation: "shift",
         }}
       />
       <Tabs.Screen
-        name="settings"
+        name='settings'
         options={{
           headerShown: false,
           title: "Settings Rules",
           tabBarIcon: ({ color }) => (
-            <FontAwesome size={28} name="cog" color={color} />
+            <FontAwesome size={28} name='cog' color={color} />
           ),
           animation: "shift",
         }}

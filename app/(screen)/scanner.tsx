@@ -84,9 +84,9 @@ export default function Scanner(): JSX.Element {
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.button} onPress={toggleCameraFacing}>
             <MaterialCommunityIcons
-              name="camera-flip"
+              name='camera-flip'
               size={30}
-              color="white"
+              color='white'
             />
           </TouchableOpacity>
         </View>

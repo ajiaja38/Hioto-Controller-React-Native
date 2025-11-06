@@ -42,36 +42,45 @@ export default function Index(): JSX.Element {
   }
 
   return (
-    <SafeAreaView className="px-4 bg-white flex-1">
+    <SafeAreaView className='px-4 bg-white flex-1'>
       <ScrollView
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       >
-        <View className="flex flex-row justify-between items-center p-5 mt-4 bg-violet-600 shadow-lg rounded-xl">
+        <View className='flex flex-row justify-between items-center p-5 mt-4 bg-violet-600 shadow-lg rounded-xl'>
           <View>
-            <Text className="font-bold text-white text-3xl font-rubik mt-2">
+            <Text className='font-bold text-white text-3xl font-rubik mt-2'>
               Hioto
             </Text>
-            <Text className="text-violet-200 text-base font-rubik-light">
+            <Text className='text-violet-200 text-base font-rubik-light'>
               Hello, Welcome to Hioto Gokils
             </Text>
           </View>
-          <Image source={icons.home} className="w-16 h-16" />
+          <Image source={icons.home} className='w-16 h-16' />
         </View>
 
-        <View className="w-full h-[45rem] flex flex-col justify-center items-center">
+        <View className='w-full h-[45rem] flex flex-col justify-center items-center'>
           <Image
             source={images.qrCode}
-            className="w-[25rem] h-[25rem] mx-auto"
+            className='w-[25rem] h-[25rem] mx-auto'
           />
-          <TouchableOpacity
-            onPress={() => router.push("/scanner")}
-            className="flex flex-row justify-center items-center gap-3 bg-violet-500 shadow-lg border border-zinc-200 rounded-full p-4 px-7"
-          >
-            <FontAwesome6 name="qrcode" size={24} color="white" />
-            <Text className="font-bold text-lg text-white">Add Device</Text>
-          </TouchableOpacity>
+          <View className='w-full border-zinc-200 flex flex-row justify-center gap-2'>
+            <TouchableOpacity
+              onPress={() => router.push("/scanner")}
+              className='flex flex-row justify-center items-center gap-3 bg-violet-500 shadow-lg border border-zinc-200 rounded-xl p-4 px-5'
+            >
+              <FontAwesome6 name='qrcode' size={24} color='white' />
+              <Text className='font-bold text-lg text-white'>Scan Device</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => router.push("/register-device")}
+              className='flex flex-row justify-center items-center gap-3 bg-green-600 shadow-lg border border-zinc-200 rounded-xl p-4 px-5'
+            >
+              <FontAwesome6 name='server' size={24} color='white' />
+              <Text className='font-bold text-lg text-white'>Input Manual</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>
