@@ -92,7 +92,7 @@ const RegisterDevice: React.FC = (): React.JSX.Element => {
             control={control}
             defaultValue={payload.guid}
             render={({ field: { onChange, value, onBlur } }) => (
-              <View>
+              <>
                 <TextInput
                   mode='outlined'
                   label='Guid'
@@ -104,7 +104,7 @@ const RegisterDevice: React.FC = (): React.JSX.Element => {
                 {errors.guid && (
                   <HelperText type='error'>{errors.guid?.message}</HelperText>
                 )}
-              </View>
+              </>
             )}
           />
 
@@ -113,7 +113,7 @@ const RegisterDevice: React.FC = (): React.JSX.Element => {
             control={control}
             defaultValue={payload.mac}
             render={({ field: { onChange, value, onBlur } }) => (
-              <View>
+              <>
                 <TextInput
                   value={value}
                   onBlur={onBlur}
@@ -125,7 +125,7 @@ const RegisterDevice: React.FC = (): React.JSX.Element => {
                 {errors.mac && (
                   <HelperText type='error'>{errors.mac?.message}</HelperText>
                 )}
-              </View>
+              </>
             )}
           />
 
@@ -133,7 +133,7 @@ const RegisterDevice: React.FC = (): React.JSX.Element => {
             name='type'
             control={control}
             render={({ field: { onChange, value } }) => (
-              <View>
+              <>
                 <Dropdown
                   style={[
                     style.dropdown,
@@ -152,7 +152,7 @@ const RegisterDevice: React.FC = (): React.JSX.Element => {
                 {errors.type && (
                   <HelperText type='error'>{errors.type?.message}</HelperText>
                 )}
-              </View>
+              </>
             )}
           />
 
@@ -161,7 +161,7 @@ const RegisterDevice: React.FC = (): React.JSX.Element => {
             control={control}
             defaultValue={payload.quantity}
             render={({ field: { onChange, onBlur, value } }) => (
-              <View>
+              <>
                 <TextInput
                   mode='outlined'
                   label='Quantity'
@@ -175,7 +175,7 @@ const RegisterDevice: React.FC = (): React.JSX.Element => {
                     {errors.quantity?.message}
                   </HelperText>
                 )}
-              </View>
+              </>
             )}
           />
 
@@ -184,7 +184,7 @@ const RegisterDevice: React.FC = (): React.JSX.Element => {
             control={control}
             defaultValue={payload.name}
             render={({ field: { onChange, onBlur, value } }) => (
-              <View>
+              <>
                 <TextInput
                   mode='outlined'
                   label='Device Name'
@@ -196,7 +196,7 @@ const RegisterDevice: React.FC = (): React.JSX.Element => {
                 {errors.name && (
                   <HelperText type='error'>{errors.name?.message}</HelperText>
                 )}
-              </View>
+              </>
             )}
           />
 
@@ -205,7 +205,7 @@ const RegisterDevice: React.FC = (): React.JSX.Element => {
             control={control}
             defaultValue={payload.version}
             render={({ field: { onChange, onBlur, value } }) => (
-              <View>
+              <>
                 <TextInput
                   value={value}
                   onBlur={onBlur}
@@ -219,7 +219,7 @@ const RegisterDevice: React.FC = (): React.JSX.Element => {
                     {errors.version?.message}
                   </HelperText>
                 )}
-              </View>
+              </>
             )}
           />
 
@@ -228,7 +228,7 @@ const RegisterDevice: React.FC = (): React.JSX.Element => {
             control={control}
             defaultValue={payload.minor}
             render={({ field: { onChange, onBlur, value } }) => (
-              <View>
+              <>
                 <TextInput
                   value={value}
                   onBlur={onBlur}
@@ -240,7 +240,7 @@ const RegisterDevice: React.FC = (): React.JSX.Element => {
                 {errors.minor && (
                   <HelperText type='error'>{errors.minor?.message}</HelperText>
                 )}
-              </View>
+              </>
             )}
           />
 
