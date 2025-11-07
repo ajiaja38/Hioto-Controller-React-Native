@@ -4,9 +4,12 @@ import { useEffect } from "react"
 import { PaperProvider } from "react-native-paper"
 import * as SplashScreen from "expo-splash-screen"
 import Toast from "react-native-toast-message"
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import "./global.css"
 
 SplashScreen.preventAutoHideAsync()
+
+const queryClient: QueryClient = new QueryClient()
 
 const RootLayout = (): JSX.Element | null => {
   const [fontsLoaded]: [boolean, Error | null] = useFonts({
@@ -30,9 +33,11 @@ const RootLayout = (): JSX.Element | null => {
 
   return (
     <PaperProvider>
-      <Stack>
-        <Stack.Screen name='(tabs)' options={{ headerShown: false }} />
-      </Stack>
+      <QueryClientProvider client={queryClient}>
+        <Stack>
+          <Stack.Screen name='(tabs)' options={{ headerShown: false }} />
+        </Stack>
+      </QueryClientProvider>
       <Toast topOffset={14} />
     </PaperProvider>
   )

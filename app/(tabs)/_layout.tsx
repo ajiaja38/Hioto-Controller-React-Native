@@ -34,6 +34,17 @@ export default function TabLayout(): React.JSX.Element {
         }}
       />
       <Tabs.Screen
+        name='devices'
+        options={{
+          headerShown: false,
+          title: "Devices",
+          tabBarIcon: ({ color }) => (
+            <FontAwesome size={28} name='th-large' color={color} />
+          ),
+          animation: "shift",
+        }}
+      />
+      <Tabs.Screen
         name='settings'
         options={{
           headerShown: false,

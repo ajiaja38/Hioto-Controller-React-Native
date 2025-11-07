@@ -15,6 +15,7 @@ import { IResponseMessageEntity } from "@/types/interface/IResponseWrapper.inter
 import { GlobalService } from "@/service/global.service"
 import { useEffect, useState } from "react"
 import { useToast } from "@/hooks/useToas"
+import { TouchableRipple } from "react-native-paper"
 
 export default function Index(): JSX.Element {
   const [refreshing, setRefreshing] = useState<boolean>(false)
@@ -60,27 +61,28 @@ export default function Index(): JSX.Element {
           <Image source={icons.home} className='w-16 h-16' />
         </View>
 
-        <View className='w-full h-[45rem] flex flex-col justify-center items-center'>
+        <View className='w-full h-[45rem] flex flex-col justify-center items-center gap-3'>
           <Image
             source={images.qrCode}
-            className='w-[25rem] h-[25rem] mx-auto'
+            className='w-[20rem] h-[20rem] mx-auto'
           />
-          <View className='w-full border-zinc-200 flex flex-row justify-center gap-2'>
-            <TouchableOpacity
-              onPress={() => router.push("/scanner")}
-              className='flex flex-row justify-center items-center gap-3 bg-violet-500 shadow-lg border border-zinc-200 rounded-xl p-4 px-5'
-            >
-              <FontAwesome6 name='qrcode' size={24} color='white' />
-              <Text className='font-bold text-lg text-white'>Scan Device</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => router.push("/register-device")}
-              className='flex flex-row justify-center items-center gap-3 bg-green-600 shadow-lg border border-zinc-200 rounded-xl p-4 px-5'
-            >
-              <FontAwesome6 name='server' size={24} color='white' />
-              <Text className='font-bold text-lg text-white'>Input Manual</Text>
-            </TouchableOpacity>
-          </View>
+          <TouchableRipple
+            onPress={() => router.push("/scanner")}
+            rippleColor='rgba(0, 0, 0, .2)'
+            className='p-9 border-2 border-gray-400 border-dashed w-full rounded-lg flex items-center'
+          >
+            <View className='flex flex-row items-center gap-3'>
+              <FontAwesome6 name='qrcode' size={24} />
+              <Text className='text-lg'>Scan Device</Text>
+            </View>
+          </TouchableRipple>
+          <TouchableOpacity
+            onPress={() => router.push("/register-device")}
+            className='w-full flex flex-row justify-center items-center gap-3 bg-violet-600 shadow-lg border border-zinc-200 rounded-xl p-3 px-5'
+          >
+            <FontAwesome6 name='server' size={24} color='white' />
+            <Text className='font-bold text-lg text-white'>Input Manual</Text>
+          </TouchableOpacity>
         </View>
       </ScrollView>
     </SafeAreaView>

@@ -1,8 +1,12 @@
 import {
+  IControlDevice,
   IRegisterDeviceDto,
   IResponseDevice,
 } from "@/types/interface/IDevice.interface"
-import { IResponseEntity } from "@/types/interface/IResponseWrapper.interface"
+import {
+  IResponseEntity,
+  IResponseMessageEntity,
+} from "@/types/interface/IResponseWrapper.interface"
 import { api } from "."
 import { EDevice } from "@/types/enum/EDevice.enum"
 
@@ -27,5 +31,17 @@ export class DeviceService {
     guid: string
   ): Promise<IResponseEntity<IResponseDevice>> {
     return await api.get(`device/${guid}`)
+  }
+
+  public static async controlDevice(
+    payload: IControlDevice
+  ): Promise<IResponseMessageEntity> {
+    return await api.put("device/control", payload)
+  }
+
+  public static async deleteDeviceByGuid(
+    guid: string
+  ): Promise<IResponseEntity<IResponseDevice>> {
+    return await api.delete(`device/${guid}`)
   }
 }

@@ -16,7 +16,15 @@ import { SafeAreaView } from "react-native-safe-area-context"
 import { Button, HelperText, TextInput } from "react-native-paper"
 import { z } from "zod"
 import { registerDeviceSchema } from "@/schema/deviceSchema"
-import { Controller, useForm } from "react-hook-form"
+import {
+  Control,
+  Controller,
+  FieldErrors,
+  FieldValues,
+  Path,
+  PathValue,
+  useForm,
+} from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { EDevice } from "@/types/enum/EDevice.enum"
 import { IResponseEntity } from "@/types/interface/IResponseWrapper.interface"
@@ -87,46 +95,20 @@ const RegisterDevice: React.FC = (): React.JSX.Element => {
         contentContainerStyle={{ paddingBottom: 20 }}
       >
         <View className='mt-4 flex flex-col gap-5 w-full'>
-          <Controller
+          <ControlText
             name='guid'
             control={control}
             defaultValue={payload.guid}
-            render={({ field: { onChange, value, onBlur } }) => (
-              <>
-                <TextInput
-                  mode='outlined'
-                  label='Guid'
-                  value={value}
-                  onBlur={onBlur}
-                  onChangeText={onChange}
-                  error={!!errors.guid}
-                />
-                {errors.guid && (
-                  <HelperText type='error'>{errors.guid?.message}</HelperText>
-                )}
-              </>
-            )}
+            label='Guid'
+            errors={errors}
           />
 
-          <Controller
+          <ControlText
             name='mac'
             control={control}
             defaultValue={payload.mac}
-            render={({ field: { onChange, value, onBlur } }) => (
-              <>
-                <TextInput
-                  value={value}
-                  onBlur={onBlur}
-                  onChangeText={onChange}
-                  mode='outlined'
-                  label='Mac Address'
-                  error={!!errors.mac}
-                />
-                {errors.mac && (
-                  <HelperText type='error'>{errors.mac?.message}</HelperText>
-                )}
-              </>
-            )}
+            label='Mac Address'
+            errors={errors}
           />
 
           <Controller
@@ -156,92 +138,36 @@ const RegisterDevice: React.FC = (): React.JSX.Element => {
             )}
           />
 
-          <Controller
+          <ControlText
             name='quantity'
             control={control}
             defaultValue={payload.quantity}
-            render={({ field: { onChange, onBlur, value } }) => (
-              <>
-                <TextInput
-                  mode='outlined'
-                  label='Quantity'
-                  value={value}
-                  onBlur={onBlur}
-                  onChangeText={onChange}
-                  error={!!errors.quantity}
-                />
-                {errors.quantity && (
-                  <HelperText type='error'>
-                    {errors.quantity?.message}
-                  </HelperText>
-                )}
-              </>
-            )}
+            label='Quantity'
+            errors={errors}
           />
 
-          <Controller
+          <ControlText
             name='name'
             control={control}
             defaultValue={payload.name}
-            render={({ field: { onChange, onBlur, value } }) => (
-              <>
-                <TextInput
-                  mode='outlined'
-                  label='Device Name'
-                  value={value}
-                  onBlur={onBlur}
-                  onChangeText={onChange}
-                  error={!!errors.name}
-                />
-                {errors.name && (
-                  <HelperText type='error'>{errors.name?.message}</HelperText>
-                )}
-              </>
-            )}
+            label='Name'
+            errors={errors}
           />
 
-          <Controller
+          <ControlText
             name='version'
             control={control}
             defaultValue={payload.version}
-            render={({ field: { onChange, onBlur, value } }) => (
-              <>
-                <TextInput
-                  value={value}
-                  onBlur={onBlur}
-                  onChangeText={onChange}
-                  mode='outlined'
-                  label='Version'
-                  error={!!errors.version}
-                />
-                {errors.version && (
-                  <HelperText type='error'>
-                    {errors.version?.message}
-                  </HelperText>
-                )}
-              </>
-            )}
+            label='Version'
+            errors={errors}
           />
 
-          <Controller
+          <ControlText
             name='minor'
             control={control}
             defaultValue={payload.minor}
-            render={({ field: { onChange, onBlur, value } }) => (
-              <>
-                <TextInput
-                  value={value}
-                  onBlur={onBlur}
-                  onChangeText={onChange}
-                  mode='outlined'
-                  label='Minor'
-                  error={!!errors.minor}
-                />
-                {errors.minor && (
-                  <HelperText type='error'>{errors.minor?.message}</HelperText>
-                )}
-              </>
-            )}
+            label='Minor'
+            errors={errors}
           />
 
           <Button
@@ -263,6 +189,49 @@ const RegisterDevice: React.FC = (): React.JSX.Element => {
         </View>
       </ScrollView>
     </SafeAreaView>
+  )
+}
+
+interface ControlTextProps<T extends FieldValues> {
+  name: Path<T>
+  label: string
+  defaultValue?: PathValue<T, Path<T>> | undefined
+  control: Control<T>
+  errors: FieldErrors<T>
+}
+
+const ControlText = <T extends FieldValues>({
+  name,
+  label,
+  defaultValue,
+  control,
+  errors,
+}: ControlTextProps<T>): JSX.Element => {
+  const errorMessage = errors[name]?.message?.toString()
+
+  return (
+    <Controller
+      name={name}
+      control={control}
+      defaultValue={defaultValue}
+      render={({ field: { onChange, onBlur, value } }) => (
+        <>
+          <TextInput
+            mode='outlined'
+            label={label}
+            value={value}
+            onBlur={onBlur}
+            onChangeText={onChange}
+            error={!!errorMessage}
+          />
+          {errorMessage && (
+            <HelperText type='error' visible={!!errorMessage}>
+              {errorMessage}
+            </HelperText>
+          )}
+        </>
+      )}
+    />
   )
 }
 

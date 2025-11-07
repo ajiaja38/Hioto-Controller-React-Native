@@ -27,3 +27,8 @@ export interface IResponseDevice extends IRegisterDeviceDto {
   created_at: string
   updated_at: string
 }
+
+export interface IControlDevice {
+  type: EDevice
+  message: string
+}
