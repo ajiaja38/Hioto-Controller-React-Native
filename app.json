@@ -4,7 +4,7 @@
     "slug": "hioto-controller",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icons/Cpu.png",
+    "icon": "./assets/icons/",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -14,7 +14,7 @@
     "android": {
       "usesCleartextTraffic": true,
       "adaptiveIcon": {
-        "foregroundImage": "./assets/icons/Cpu.png",
+        "foregroundImage": "./assets/icons/icon.png",
         "backgroundColor": "#ffffff"
       },
       "permissions": [
@@ -26,14 +26,14 @@
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./assets/icons/icon.png"
     },
     "plugins": [
       "expo-router",
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/QR-Code.png",
+          "image": "./assets/images/splash-icon.png",
           "resizeMode": "cover",
           "backgroundColor": "#ffffff",
           "enableFullScreenImage_legacy": true

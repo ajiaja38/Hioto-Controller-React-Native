@@ -58,7 +58,7 @@ export default function Index(): JSX.Element {
               Hello, Welcome to Hioto Gokils
             </Text>
           </View>
-          <Image source={icons.home} className='w-16 h-16' />
+          <Image source={icons.addDevice} className='w-16 h-16' />
         </View>
 
         <View className='w-full h-[45rem] flex flex-col justify-center items-center gap-3'>

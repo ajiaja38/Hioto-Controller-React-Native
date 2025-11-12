@@ -38,10 +38,6 @@ const Devices = () => {
 
   const handleControlDevice = (payload: IControlDevice) => mutate(payload)
 
-  useEffect(() => {
-    refetch()
-  }, [value])
-
   return (
     <SafeAreaView className='flex-1 bg-white'>
       <RefreshControl refreshing={isFetching} onRefresh={refetch} />
