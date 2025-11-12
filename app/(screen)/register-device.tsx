@@ -32,6 +32,7 @@ import { DeviceService } from "@/service/device.service"
 import { ActivityIndicator, MD2Colors } from "react-native-paper"
 import { useToast } from "@/hooks/useToas"
 import { Dropdown } from "react-native-element-dropdown"
+import ControlText from "@/components/ControlText"
 
 type RegisterDeviceSchema = z.infer<typeof registerDeviceSchema>
 
@@ -189,49 +190,6 @@ const RegisterDevice: React.FC = (): React.JSX.Element => {
         </View>
       </ScrollView>
     </SafeAreaView>
-  )
-}
-
-interface ControlTextProps<T extends FieldValues> {
-  name: Path<T>
-  label: string
-  defaultValue?: PathValue<T, Path<T>> | undefined
-  control: Control<T>
-  errors: FieldErrors<T>
-}
-
-const ControlText = <T extends FieldValues>({
-  name,
-  label,
-  defaultValue,
-  control,
-  errors,
-}: ControlTextProps<T>): JSX.Element => {
-  const errorMessage = errors[name]?.message?.toString()
-
-  return (
-    <Controller
-      name={name}
-      control={control}
-      defaultValue={defaultValue}
-      render={({ field: { onChange, onBlur, value } }) => (
-        <>
-          <TextInput
-            mode='outlined'
-            label={label}
-            value={value}
-            onBlur={onBlur}
-            onChangeText={onChange}
-            error={!!errorMessage}
-          />
-          {errorMessage && (
-            <HelperText type='error' visible={!!errorMessage}>
-              {errorMessage}
-            </HelperText>
-          )}
-        </>
-      )}
-    />
   )
 }
 

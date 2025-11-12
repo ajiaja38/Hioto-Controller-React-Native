@@ -28,6 +28,8 @@ export interface IResponseDevice extends IRegisterDeviceDto {
   updated_at: string
 }
 
+export interface IUpdateDeviceDto extends IRegisterDeviceDto {}
+
 export interface IControlDevice {
   type: EDevice
   message: string

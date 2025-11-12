@@ -2,6 +2,7 @@ import {
   IControlDevice,
   IRegisterDeviceDto,
   IResponseDevice,
+  IUpdateDeviceDto,
 } from "@/types/interface/IDevice.interface"
 import {
   IResponseEntity,
@@ -31,6 +32,12 @@ export class DeviceService {
     guid: string
   ): Promise<IResponseEntity<IResponseDevice>> {
     return await api.get(`device/${guid}`)
+  }
+
+  public static async updateDevice(
+    updateDeviceDto: IUpdateDeviceDto
+  ): Promise<IResponseEntity<IResponseDevice>> {
+    return await api.put("device", updateDeviceDto)
   }
 
   public static async controlDevice(

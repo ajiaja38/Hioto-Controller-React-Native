@@ -22,3 +22,5 @@ export const registerDeviceSchema = z.object({
     .string({ required_error: "Minor is required" })
     .min(1, { message: "Minor is required" }),
 })
+
+export const updateDeviceSchema = registerDeviceSchema
