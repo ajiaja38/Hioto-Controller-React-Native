@@ -1,7 +1,7 @@
 import axios, { AxiosInstance } from "axios"
 
 export const api: AxiosInstance = axios.create({
-  baseURL: "https://hgx0rtj8-8000.asse.devtunnels.ms/api",
+  baseURL: "http://192.168.4.22:8000/api",
 })
 
 api.interceptors.response.use((res) => res.data)
